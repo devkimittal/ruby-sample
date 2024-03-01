@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_ruby_sample_1709280093351-pr-trigger-input-set
+  identifier: Build_ruby_sample_1709280093351prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: RaghavTest
+  pipeline:
+    identifier: Build_ruby_sample_1709280093351
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
