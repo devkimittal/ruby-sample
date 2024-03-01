@@ -1,0 +1,53 @@
+pipeline:
+  identifier: Build_ruby_sample_1709280093351
+  name: Build ruby-sample
+  orgIdentifier: default
+  projectIdentifier: RaghavTest
+  properties:
+    ci:
+      codebase:
+        build: <+input>
+        connectorRef: account.devmittal
+        repoName: ruby-sample
+  stages:
+    - stage:
+        identifier: build
+        name: build
+        spec:
+          cloneCodebase: true
+          execution:
+            steps:
+              - step:
+                  identifier: bundleinstall
+                  name: bundle_install
+                  spec:
+                    command: bundle install --local || bundle install
+                  timeout: ""
+                  type: Run
+              - step:
+                  identifier: raketest
+                  name: rake_test
+                  spec:
+                    command: bundle exec rake test
+                  timeout: ""
+                  type: Run
+              - step:
+                  identifier: dockerbuild
+                  name: docker_build
+                  spec:
+                    image: plugins/docker
+                    settings:
+                      dry_run: "true"
+                      password: <+input>
+                      repo: hello/world
+                      tags: latest
+                      username: <+input>
+                  timeout: ""
+                  type: Plugin
+          platform:
+            arch: Amd64
+            os: Linux
+          runtime:
+            spec: {}
+            type: Cloud
+        type: CI
