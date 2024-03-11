@@ -38,4 +38,4 @@ pipeline:
       type: String
       description: ""
       required: false
-      value: 12,13,14
+      value: <+input>
