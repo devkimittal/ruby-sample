@@ -21,9 +21,7 @@ pipeline:
                   type: Run
                   strategy:
                     matrix:
-                      ip:
-                        - 12
-                        - 13
+                      ip: <+<+input>.split(',')>
           platform:
             os: Linux
             arch: Amd64
