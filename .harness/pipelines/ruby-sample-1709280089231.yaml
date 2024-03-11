@@ -21,7 +21,7 @@ pipeline:
                   type: Run
                   strategy:
                     matrix:
-                      ip: <+<+input>.split(',')>
+                      ip: <+<+pipeline.variables.ips>.split(',')>
           platform:
             os: Linux
             arch: Amd64
@@ -33,3 +33,9 @@ pipeline:
             paths: []
         type: CI
         description: ""
+  variables:
+    - name: ips
+      type: String
+      description: ""
+      required: false
+      value: 12,13,14
