@@ -3,51 +3,35 @@ pipeline:
   name: Build ruby-sample
   orgIdentifier: default
   projectIdentifier: RaghavTest
-  properties:
-    ci:
-      codebase:
-        build: <+input>
-        connectorRef: account.devmittal
-        repoName: ruby-sample
   stages:
     - stage:
         identifier: build
         name: build
         spec:
-          cloneCodebase: true
+          cloneCodebase: false
           execution:
             steps:
               - step:
                   identifier: bundleinstall
                   name: bundle_install
                   spec:
-                    command: bundle install --local || bundle install
+                    shell: Sh
+                    command: echo <+matrix.ip>
                   timeout: ""
                   type: Run
-              - step:
-                  identifier: raketest
-                  name: rake_test
-                  spec:
-                    command: bundle exec rake test
-                  timeout: ""
-                  type: Run
-              - step:
-                  identifier: dockerbuild
-                  name: docker_build
-                  spec:
-                    image: plugins/docker
-                    settings:
-                      dry_run: "true"
-                      password: <+input>
-                      repo: hello/world
-                      tags: latest
-                      username: <+input>
-                  timeout: ""
-                  type: Plugin
+                  strategy:
+                    matrix:
+                      ip:
+                        - 12
+                        - 13
           platform:
-            arch: Amd64
             os: Linux
+            arch: Amd64
           runtime:
-            spec: {}
             type: Cloud
+            spec: {}
+          caching:
+            enabled: false
+            paths: []
         type: CI
+        description: ""
